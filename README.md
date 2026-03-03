@@ -2,7 +2,7 @@
 
 A full-stack web application for managing airport facility issues, featuring role-based dashboards, real-time updates, and an emergency SOS system.
 
-## 🚀 Built With
+## Built With
 
 ### Backend
 - **Java 17**
@@ -20,14 +20,14 @@ A full-stack web application for managing airport facility issues, featuring rol
 
 ---
 
-## 🛠️ Prerequisites
+## Prerequisites
 - **Java JDK 17+**
 - **Node.js 18+**
 - **MongoDB** (Local instance running on `27017`)
 
 ---
 
-## 📦 Installation & Setup
+## Installation & Setup
 
 ### 1. Backend Setup
 1. Navigate to the `backend` directory:
@@ -57,7 +57,7 @@ A full-stack web application for managing airport facility issues, featuring rol
 
 ---
 
-## 🔑 Default Login Credentials
+## Default Login Credentials
 
 The application seeds these users on startup:
 
@@ -69,7 +69,7 @@ The application seeds these users on startup:
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 - **Role-Based Access Control (RBAC)**: Distinct dashboards for Passengers, Staff, and Admins.
 - **Reporting System**: Passengers can report issues with Categories and Priority levels.
@@ -77,7 +77,7 @@ The application seeds these users on startup:
 - **Emergency SOS**: Publicly accessible "Big Red Button" for critical emergencies.
 - **Real-Time Updates**: Dashboards auto-refresh every 5 seconds to show the latest status.
 
-## 📡 API Endpoints
+## API Endpoints
 
 - `POST /api/auth/login` - Authenticate user
 - `POST /api/issues` - Report a new issue
