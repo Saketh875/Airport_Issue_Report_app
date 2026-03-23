@@ -56,7 +56,12 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+<<<<<<< HEAD
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll()
+=======
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/", "/error").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+>>>>>>> origin/master
                         .requestMatchers("/api/test/**").permitAll()
                         .requestMatchers("/api/issues/sos").permitAll()
                         .anyRequest().authenticated());
