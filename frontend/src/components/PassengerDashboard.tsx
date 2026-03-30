@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import FlightBoard from './FlightBoard';
 
 interface Issue {
     id: string;
@@ -54,6 +55,8 @@ const PassengerDashboard = () => {
                 <h1 className="text-3xl font-bold">Passenger Dashboard</h1>
                 <button onClick={logout} className="bg-red-600 px-4 py-2 rounded">Logout</button>
             </div>
+
+            <FlightBoard />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="bg-slate-800 p-6 rounded-lg">

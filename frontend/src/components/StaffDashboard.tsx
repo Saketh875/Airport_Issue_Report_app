@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import FlightBoard from './FlightBoard';
 
 interface Issue {
     id: string;
@@ -49,6 +50,8 @@ const StaffDashboard = () => {
                     <button onClick={logout} className="bg-red-600 px-4 py-2 rounded">Logout</button>
                 </div>
             </div>
+
+            <FlightBoard />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {['CREATED', 'IN_PROGRESS', 'RESOLVED'].map(status => (
