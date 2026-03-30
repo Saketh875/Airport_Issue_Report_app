@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+// Set base URL from environment variable, fallback to /api for dev
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+axios.defaults.baseURL = API_BASE_URL;
+
 const setupAxiosInterceptors = () => {
     axios.interceptors.request.use(
         (config) => {
