@@ -1,8 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
-import { fetchMultipleAirports } from '../services/airportService';
+import { fetchRealFlights } from '../services/flightService';
 
 type FlightType = 'ARRIVAL' | 'DEPARTURE';
-type FlightStatus = 'ON_TIME' | 'DELAYED' | 'BOARDING' | 'LANDED' | 'DEPARTED';
 
 interface Flight {
     id: string;
@@ -13,7 +12,7 @@ interface Flight {
     terminal: string;
     gate: string;
     scheduledTime: string;
-    status: FlightStatus;
+    status: string;
     type: FlightType;
 }
 
@@ -28,10 +27,10 @@ const MOCK_FLIGHTS: Omit<Flight, 'country'>[] = [
     { id: 'd4', code: 'IX 443', iata: 'PNQ', city: 'Pune', terminal: 'T2', gate: 'A22', scheduledTime: '11:15', status: 'DEPARTED', type: 'DEPARTURE' }
 ];
 
-const statusClass = (status: FlightStatus) => {
-    if (status === 'DELAYED') return 'bg-red-600/20 text-red-300 border border-red-500/40';
-    if (status === 'BOARDING') return 'bg-yellow-600/20 text-yellow-300 border border-yellow-500/40';
-    if (status === 'LANDED' || status === 'DEPARTED') return 'bg-emerald-600/20 text-emerald-300 border border-emerald-500/40';
+const statusClass = (status: string) => {
+    if (status === 'DELAYED' || status.includes('DELAYED')) return 'bg-red-600/20 text-red-300 border border-red-500/40';
+    if (status === 'BOARDING' || status.includes('BOARDING')) return 'bg-yellow-600/20 text-yellow-300 border border-yellow-500/40';
+    if (status === 'LANDED' || status === 'DEPARTED' || status.includes('LANDING')) return 'bg-emerald-600/20 text-emerald-300 border border-emerald-500/40';
     return 'bg-blue-600/20 text-blue-300 border border-blue-500/40';
 };
 
@@ -40,37 +39,35 @@ const FlightBoard = () => {
     const [flights, setFlights] = useState<Flight[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Load airport data on component mount
+    // Load real flight data on component mount
     useEffect(() => {
-        const loadAirportData = async () => {
+        const loadFlightData = async () => {
             try {
                 setLoading(true);
-                // Extract unique IATA codes from mock flights
-                const iataCodes = [...new Set(MOCK_FLIGHTS.map(f => f.iata))];
+                // Fetch real flight data from OpenSky Network API
+                const realFlights = await fetchRealFlights();
                 
-                // Fetch airport data for all codes
-                const airportMap = await fetchMultipleAirports(iataCodes);
-                
-                // Merge mock flight data with real airport data
-                const enrichedFlights = MOCK_FLIGHTS.map(flight => {
-                    const airport = airportMap.get(flight.iata);
-                    return {
-                        ...flight,
-                        country: airport?.country || 'Unknown',
-                    };
-                });
-                
-                setFlights(enrichedFlights);
+                if (realFlights.length > 0) {
+                    setFlights(realFlights);
+                } else {
+                    // Fallback to mock data if API returns no results
+                    console.warn('No real flights available, using mock data');
+                    setFlights(MOCK_FLIGHTS.map(f => ({ ...f, country: 'International' })));
+                }
             } catch (error) {
-                console.error('Error loading airport data:', error);
+                console.error('Error loading flight data:', error);
                 // Fallback to mock data if API fails
-                setFlights(MOCK_FLIGHTS.map(f => ({ ...f, country: 'India' })));
+                setFlights(MOCK_FLIGHTS.map(f => ({ ...f, country: 'International' })));
             } finally {
                 setLoading(false);
             }
         };
 
-        loadAirportData();
+        loadFlightData();
+        
+        // Refresh flight data every 30 seconds
+        const interval = setInterval(loadFlightData, 30000);
+        return () => clearInterval(interval);
     }, []);
 
     const filtered = useMemo(() => {
@@ -128,13 +125,13 @@ const FlightBoard = () => {
                 <div>
                     <h2 className="text-2xl font-bold">Arrivals & Departures</h2>
                     <p className="text-slate-400 text-sm">
-                        {loading ? 'Loading live airport data...' : 'Live board for current terminal operations'}
+                        {loading ? '🔄 Fetching live flight data from OpenSky Network API...' : '✈️ Real-time flight data'}
                     </p>
                 </div>
                 <input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search flight, city, country, or gate"
+                    placeholder="Search flight, country, or gate"
                     className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm outline-none focus:border-blue-500"
                     disabled={loading}
                 />
@@ -145,7 +142,11 @@ const FlightBoard = () => {
                     <div className="animate-spin">
                         <div className="h-8 w-8 border-4 border-slate-700 border-t-blue-500 rounded-full"></div>
                     </div>
-                    <span className="ml-3 text-slate-400">Loading airport data from API...</span>
+                    <span className="ml-3 text-slate-400">Loading real flight data from OpenSky API...</span>
+                </div>
+            ) : flights.length === 0 ? (
+                <div className="flex items-center justify-center py-12">
+                    <p className="text-slate-400">No flight data available. Using mock data below.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
