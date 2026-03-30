@@ -5,6 +5,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import SOSPage from './pages/SOSPage';
+import Calendar from './components/Calendar';
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/admin" element={<Dashboard />} />
                     <Route path="/sos" element={<SOSPage />} />
                     <Route path="/report" element={<Dashboard />} />
+                    <Route path="/calendar" element={<Calendar />} />
                 </Routes>
             </Router>
         </AuthProvider>
