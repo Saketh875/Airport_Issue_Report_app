@@ -15,7 +15,6 @@ interface Issue {
 
 const AdminDashboard = () => {
     const [issues, setIssues] = useState<Issue[]>([]);
-    const [showReportModal, setShowReportModal] = useState(false);
 
     useEffect(() => {
         fetchIssues();
@@ -39,28 +38,28 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-900">
+        <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#0f172a,_#020617_55%)] text-white">
             <Header title="Admin Dashboard" />
 
             <div className="p-6 pb-32">
                 <FlightBoard />
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-slate-800 p-6 rounded-lg text-center">
+                    <div className="rounded-2xl border border-cyan-400/30 bg-cyan-500/10 p-6 text-center">
                         <h3 className="text-gray-400">Total Issues</h3>
-                        <p className="text-4xl font-bold">{stats.total}</p>
+                        <p className="text-4xl font-black text-cyan-300">{stats.total}</p>
                     </div>
-                    <div className="bg-slate-800 p-6 rounded-lg text-center border-b-4 border-red-600">
+                    <div className="rounded-2xl border border-rose-400/30 bg-rose-500/10 p-6 text-center">
                         <h3 className="text-gray-400">Active Critical</h3>
-                        <p className="text-4xl font-bold text-red-500">{stats.critical}</p>
+                        <p className="text-4xl font-black text-rose-300">{stats.critical}</p>
                     </div>
-                    <div className="bg-slate-800 p-6 rounded-lg text-center border-b-4 border-green-600">
+                    <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-6 text-center">
                         <h3 className="text-gray-400">Resolved</h3>
-                        <p className="text-4xl font-bold text-green-500">{stats.resolved}</p>
+                        <p className="text-4xl font-black text-emerald-300">{stats.resolved}</p>
                     </div>
                 </div>
 
-                <div className="bg-slate-800 p-6 rounded-lg">
+                <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-6 shadow-xl shadow-slate-950/40 backdrop-blur">
                     <h2 className="text-xl font-bold mb-4">All Issues</h2>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
@@ -95,8 +94,7 @@ const AdminDashboard = () => {
                 </div>
             </div>
 
-            {/* Report Issue Button */}
-            <ReportButton onClick={() => setShowReportModal(!showReportModal)} isOpen={showReportModal} />
+            <ReportButton />
         </div>
     );
 };

@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import SOSPage from './pages/SOSPage';
 import Calendar from './components/Calendar';
+import IssueReport from './pages/IssueReport';
 
 function App() {
     return (
@@ -19,7 +20,8 @@ function App() {
                     <Route path="/staff" element={<Dashboard />} />
                     <Route path="/admin" element={<Dashboard />} />
                     <Route path="/sos" element={<SOSPage />} />
-                    <Route path="/report" element={<Dashboard />} />
+                    <Route path="/report" element={<IssueReport />} />
+                    <Route path="/issues/report" element={<IssueReport />} />
                     <Route path="/calendar" element={<Calendar />} />
                 </Routes>
             </Router>

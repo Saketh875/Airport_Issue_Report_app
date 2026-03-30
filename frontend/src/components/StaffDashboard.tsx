@@ -17,7 +17,6 @@ interface Issue {
 const StaffDashboard = () => {
     const { user } = useContext(AuthContext);
     const [issues, setIssues] = useState<Issue[]>([]);
-    const [showReportModal, setShowReportModal] = useState(false);
 
     useEffect(() => {
         fetchIssues();
@@ -44,7 +43,7 @@ const StaffDashboard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-900">
+        <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#0f172a,_#020617_55%)] text-white">
             <Header title={`Staff Dashboard - ${user?.email}`} />
 
             <div className="p-6 pb-32">
@@ -52,14 +51,14 @@ const StaffDashboard = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {['CREATED', 'IN_PROGRESS', 'RESOLVED'].map(status => (
-                        <div key={status} className="bg-slate-800 p-4 rounded-lg min-h-[50vh]">
+                        <div key={status} className="min-h-[50vh] rounded-2xl border border-white/10 bg-slate-900/60 p-4 shadow-xl shadow-slate-950/40 backdrop-blur">
                             <h2 className="text-xl font-bold mb-4 border-b border-slate-700 pb-2">{status}</h2>
                             <div className="flex flex-col gap-4">
                                 {issues.filter(i => i.status === status).length === 0 ? (
                                     <p className="text-slate-400 text-sm py-4">No issues</p>
                                 ) : (
                                     issues.filter(i => i.status === status).map(issue => (
-                                        <div key={issue.id} className={`bg-slate-700 p-4 rounded border-l-4 ${issue.priority === 'CRITICAL' ? 'border-red-600' : 'border-blue-500'}`}>
+                                        <div key={issue.id} className={`rounded-xl border border-white/10 bg-slate-800/70 p-4 ${issue.priority === 'CRITICAL' ? 'ring-1 ring-rose-500/60' : ''}`}>
                                             <div className="flex justify-between items-start">
                                                 <span className="font-bold text-lg">{issue.category}</span>
                                                 {issue.priority === 'CRITICAL' && <span className="animate-pulse bg-red-600 text-xs px-2 py-1 rounded">CRITICAL</span>}
@@ -79,8 +78,7 @@ const StaffDashboard = () => {
                 </div>
             </div>
 
-            {/* Report Issue Button */}
-            <ReportButton onClick={() => setShowReportModal(!showReportModal)} isOpen={showReportModal} />
+            <ReportButton />
         </div>
     );
 };
