@@ -26,11 +26,7 @@ public class IssueController {
     }
 
     @GetMapping("/my-issues")
-<<<<<<< HEAD
-    public List<Issue> getMyIssues(@RequestParam String reporterId) {
-=======
     public List<Issue> getMyIssues(@RequestParam Long reporterId) {
->>>>>>> origin/master
         return issueRepository.findByReporterId(reporterId);
     }
 
@@ -57,11 +53,7 @@ public class IssueController {
 
     @PutMapping("/{id}/status")
     @PreAuthorize("hasAuthority('STAFF') or hasAuthority('ADMIN')")
-<<<<<<< HEAD
-    public ResponseEntity<Issue> updateStatus(@PathVariable String id, @RequestBody IssueStatus newStatus) {
-=======
     public ResponseEntity<Issue> updateStatus(@PathVariable Long id, @RequestBody IssueStatus newStatus) {
->>>>>>> origin/master
         return issueRepository.findById(id)
                 .map(issue -> {
                     issue.setStatus(newStatus);

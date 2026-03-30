@@ -1,20 +1,5 @@
 package com.airport.issueapp.models;
 
-<<<<<<< HEAD
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import lombok.Data;
-
-@Data
-@Document(collection = "users")
-public class User {
-    @Id
-    private String id;
-    private String email;
-    private String password;
-    private Role role;
-    private String fullName;
-=======
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -41,5 +26,4 @@ public class User {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
->>>>>>> origin/master
 }

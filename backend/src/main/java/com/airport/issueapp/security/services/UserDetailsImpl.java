@@ -14,21 +14,13 @@ import java.util.Objects;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-<<<<<<< HEAD
-    private String id;
-=======
     private Long id;
->>>>>>> origin/master
     private String email;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-<<<<<<< HEAD
-    public UserDetailsImpl(String id, String email, String password,
-=======
     public UserDetailsImpl(Long id, String email, String password,
->>>>>>> origin/master
             Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
@@ -52,11 +44,7 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-<<<<<<< HEAD
-    public String getId() {
-=======
     public Long getId() {
->>>>>>> origin/master
         return id;
     }
 
